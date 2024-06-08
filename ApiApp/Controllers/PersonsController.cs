@@ -1,6 +1,7 @@
 ﻿using Internship.Model;
 using Internship.ObjectModel;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
 
@@ -69,6 +70,20 @@ namespace Internship.Controllers
             }
             else
                 return BadRequest();
+        }
+
+        [HttpDelete("{Id}")]
+        public IActionResult Delete(int Id)
+        {
+            var db = new APIDbContext();
+            Person person = db.Persons.FirstOrDefault(x => x.Id == Id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            db.Persons.Remove(person);
+            db.SaveChanges();
+            return NoContent();
         }
     }
 }
