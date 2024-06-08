@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,AuthoringTagHelpers
+
+@model List<PersonInformation>
+
+    <h2>Person List</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Address</th>
+                <th>Position Id</th>
+                <th>Salary</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Model)
+            {
+            <tr>
+                <td>@person.Name</td>
+                <td>@person.Surname</td>
+                <td>@person.Age</td>
+                <td>@person.Address</td>
+                <td>@person.PositionId</td>
+                <td>@person.SalaryId</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Update" asp-route-id="@person.Id">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@person.Id" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this person?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>

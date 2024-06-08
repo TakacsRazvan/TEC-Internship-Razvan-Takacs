@@ -103,7 +103,23 @@ namespace WebApp.Controllers
             else
                 return View(person);
         }
-     
+
+        public async Task<IActionResult> Delete(int Id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.DeleteAsync("http://localhost:5229/api/persons/" + Id);
+            if (message.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "There is an API Error");
+                return RedirectToAction("Index");
+            }
+        }
+
+
 
     }
 }
